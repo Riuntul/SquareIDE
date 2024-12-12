@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_text"
+        android:text="@string/create_project"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="30dp"/>
+    
+    <FrameLayout
+        android:id="@+id/project_config_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="100dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+            
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        
+            <EditText
+                android:id="@+id/project_name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/project_name"
+                android:inputType="text"
+                android:importantForAutofill="no"/>
+        
+        </com.google.android.material.textfield.TextInputLayout>
+    
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="80dp">
+        
+            <EditText
+                android:id="@+id/package_name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_package_2"
+                android:drawablePadding="13dp"
+                android:hint="@string/package_name"
+                android:inputType="text"
+                android:importantForAutofill="no"/>
+        
+        </com.google.android.material.textfield.TextInputLayout>
+        
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="160dp">
+        
+            <EditText
+                android:id="@+id/project_path_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_folder"
+                android:drawablePadding="13dp"
+                android:hint="@string/project_path"
+                android:inputType="text"
+                android:importantForAutofill="no"/>
+        
+        </com.google.android.material.textfield.TextInputLayout>
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
