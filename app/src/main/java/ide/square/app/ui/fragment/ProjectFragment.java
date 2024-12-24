@@ -31,6 +31,7 @@ public class ProjectFragment extends Fragment {
         messageTextView.setText(R.string.not_project);
         
         FloatingActionButton createProjectFab = binding.createProjectFab;
+        
         createProjectFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +43,7 @@ public class ProjectFragment extends Fragment {
     
     @Override
     public void onDestroyView() {
-        super.onDestroy();
+        super.onDestroyView();
         
         binding = null;
     }

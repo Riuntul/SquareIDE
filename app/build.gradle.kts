@@ -10,7 +10,7 @@ android {
         applicationId = "ide.square.app"
         
         targetSdk = 34
-        minSdk = 21
+        minSdk = 29
         
         versionCode = 1
         versionName = "1.0"
@@ -19,10 +19,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     
@@ -42,5 +39,4 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.lsp4j)
-    implementation(libs.dom4j)
 }

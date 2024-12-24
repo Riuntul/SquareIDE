@@ -21,7 +21,7 @@ public class SettingsFragment extends Fragment {
     
     @Override
     public void onDestroyView() {
-        super.onDestroy();
+        super.onDestroyView();
         
         binding = null;
     }
