@@ -29,9 +29,4 @@ jobs:
     - name: Upload Release APK
       uses: actions/upload-artifact@v4
       with:
-        path: app/build/outputs/apk/release/app-release-unsigned.apk  
-
-    - name: Upload Debug APK
-      uses: actions/upload-artifact@v4
-      with:
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/release/app-release-unsigned.apk
