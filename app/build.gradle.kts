@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "org.riuntul.ide"
+    namespace = "ide.square.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "org.riuntul.ide"
+        applicationId = "ide.square.app"
         
         targetSdk = 34
         minSdk = 21
@@ -41,4 +41,6 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    implementation(libs.lsp4j)
+    implementation(libs.dom4j)
 }

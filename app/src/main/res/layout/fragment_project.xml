@@ -17,4 +17,5 @@
         android:src="@drawable/ic_add"
         android:contentDescription="@string/create_project"
         android:layout_margin="16dp"/>
+        
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

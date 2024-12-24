@@ -7,4 +7,9 @@
     <string name="project_name">Project Name</string>
     <string name="package_name">Package Name</string>
     <string name="project_path">Save Location</string>
+    <string name="project_name_text">My Application</string>
+    <string name="package_name_text">com.example.myapplication</string>
+    <string name="project_path_text">/storage/emulated/0/RiuntulIDEProjects/My Application</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
 </resources>

@@ -7,12 +7,12 @@
     
     <fragment
         android:id="@+id/project_fragment"
-        android:name="org.riuntul.ide.ui.fragment.ProjectFragment"
+        android:name="ide.square.app.ui.fragment.ProjectFragment"
         android:label="project"
         tools:layout="@layout/fragment_project"/>
     <fragment
         android:id="@+id/settings_fragment"
-        android:name="org.riuntul.ide.ui.fragment.SettingsFragment"
+        android:name="ide.square.app.ui.fragment.SettingsFragment"
         android:label="settings"
         tools:layout="@layout/fragment_settings"/>
     
