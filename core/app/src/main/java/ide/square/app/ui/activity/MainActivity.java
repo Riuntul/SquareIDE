@@ -1,13 +1,8 @@
 package ide.square.app.ui.activity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -23,8 +18,6 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import ide.square.app.R;
 import ide.square.app.databinding.ActivityMainBinding;
-import java.io.IOException;
-import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;

@@ -1,16 +1,18 @@
 package ide.square.template.module;
 
 import android.content.Context;
+
 import ide.square.template.BaseTemplate;
 import ide.square.template.TemplateFile;
+
 import java.io.IOException;
 
-public class AndroidTemplate extends BaseTemplate {
+public class NoActivityTemplate extends BaseTemplate {
     private String projectName;
     private String packageName;
 
-    public AndroidTemplate(String projectName, String packageName, Context context) {
-        super("AndroidProject", context);
+    public NoActivityTemplate(String projectName, String packageName, Context context) {
+        super("No Activity", context);
         
         this.projectName = projectName;
         this.packageName = packageName;
@@ -89,48 +91,49 @@ public class AndroidTemplate extends BaseTemplate {
             "rootProject.name = \"" + projectName + "\"\n" +
             "include(\":app\")"
         ));
-
-        addFile(new TemplateFile("app/src/main/java/" + packageName.replace('.', '/') + "/MainActivity.java",
-            "package " + packageName + ";\n" +
-            "\n" +
-            "import android.os.Bundle;\n" +
-            "import androidx.appcompat.app.AppCompatActivity;\n" +
-            "import " + packageName + ".databinding.ActivityMainBinding;\n"+
-            "\n" +
-            "public class MainActivity extends AppCompatActivity {\n" +
-            "    public ActivityMainBinding binding;\n" +
-            "    \n" +
-            "    @Override\n" +
-            "    protected void onCreate(Bundle savedInstanceState) {\n" +
-            "        super.onCreate(savedInstanceState);\n" +
-            "        \n" +
-            "        binding = ActivityMainBinding.inflate(getLayoutInflater());\n" +
-            "        \n" +
-            "        setContentView(binding.getRoot());\n" +
-            "    }\n" +
-            "    \n" +
-            "    @Override\n" +
-            "    public void onDestroy() {\n" +
-            "        super.onDestroy();\n" +
-            "        \n" +
-            "        binding = null;\n" +
-            "    }\n" +
-            "}"
+        
+        addFile(new TemplateFile("app/src/main/res/values/strings.xml",
+            "<resources>\n" +
+            "    <string name=\"app_name\">" + projectName + "</string>\n" +
+            "</resources>"
         ));
         
-        try {
-            addFileFromApkAssets("app/proguard-rules.pro", "template/base/app/proguard-rules.pro");
-            addFileFromApkAssets("gradle.properties", "template/base/gradle.properties");
-            addFileFromApkAssets("build.gradle.kts", "template/base/build.gradle.kts");
-            addFileFromApkAssets("gradlew", "template/base/gradlew");
-            addFileFromApkAssets("gradlew.bat", "template/base/gradlew.bat");
-            addFileFromApkAssets("gradle/libs.versions.toml", "template/base/gradle/libs.versions.toml");
-            addFileFromApkAssets("gradle/wrapper/gradle-wrapper.properties", "template/base/gradle/wrapper/gradle-wrapper.properties");
-            addFileFromApkAssets("gradle/wrapper/gradle-wrapper.jar", "template/base/gradle/wrapper/gradle-wrapper.jar");
-            addFileFromApkAssets(".gitignore", "template/base/gitignore");
-            addFileFromApkAssets("app/.gitignore", "template/base/app/gitignore");
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        addFile(new TemplateFile("app/src/main/res/values/themes.xml",
+            "<resources xmlns:tools=\"http://schemas.android.com/tools\">\n" +
+            "    <!-- Base application theme. -->\n" +
+            "    <style name=\"Theme." + projectName.replaceAll("\\s", "") + "\" parent=\"Theme.MaterialComponents.DayNight.DarkActionBar\">\n" +
+            "        <!-- Primary brand color. -->\n" +
+            "        <item name=\"colorPrimary\">@color/purple_500</item>\n" +
+            "        <item name=\"colorPrimaryVariant\">@color/purple_700</item>\n" +
+            "        <item name=\"colorOnPrimary\">@color/white</item>\n" +
+            "        <!-- Secondary brand color. -->\n" +
+            "        <item name=\"colorSecondary\">@color/teal_200</item>\n" +
+            "        <item name=\"colorSecondaryVariant\">@color/teal_700</item>\n" +
+            "        <item name=\"colorOnSecondary\">@color/black</item>\n" +
+            "        <!-- Status bar color. -->\n" +
+            "        <item name=\"android:statusBarColor\">?attr/colorPrimaryVariant</item>\n" +
+            "        <!-- Customize your theme here. -->\n" +
+            "    </style>\n" +
+            "</resources>"
+        ));
+        
+        addFile(new TemplateFile("app/src/main/res/values-night/themes.xml",
+            "<resources xmlns:tools=\"http://schemas.android.com/tools\">\n" +
+            "    <!-- Base application theme. -->\n" +
+            "    <style name=\"Theme." + projectName.replaceAll("\\s", "") + "\" parent=\"Theme.MaterialComponents.DayNight.DarkActionBar\">\n" +
+            "        <!-- Primary brand color. -->\n" +
+            "        <item name=\"colorPrimary\">@color/purple_200</item>\n" +
+            "        <item name=\"colorPrimaryVariant\">@color/purple_700</item>\n" +
+            "        <item name=\"colorOnPrimary\">@color/black</item>\n" +
+            "        <!-- Secondary brand color. -->\n" +
+            "        <item name=\"colorSecondary\">@color/teal_200</item>\n" +
+            "        <item name=\"colorSecondaryVariant\">@color/teal_200</item>\n" +
+            "        <item name=\"colorOnSecondary\">@color/black</item>\n" +
+            "        <!-- Status bar color. -->\n" +
+            "        <item name=\"android:statusBarColor\">?attr/colorPrimaryVariant</item>\n" +
+            "        <!-- Customize your theme here. -->\n" +
+            "    </style>\n" +
+            "</resources>"
+        ));        
     }
 }

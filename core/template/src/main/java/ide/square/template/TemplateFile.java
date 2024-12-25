@@ -1,15 +1,23 @@
 package ide.square.template;
 
-public class TemplateFile extends BaseTemplateFile {
+public class TemplateFile {
+    private String fileName;
     private String content;
 
     public TemplateFile(String fileName, String content) {
-        super(fileName);
+        this.fileName = fileName;
         this.content = content;
     }
 
-    @Override
     public String getContent() {
         return content;
+    }
+    
+    public String getFileName() {
+        return fileName;
+    }
+    
+    public String toString() {
+        return "TemplateFile{fileName='" + fileName + "'}";
     }
 }

@@ -1,6 +1,7 @@
 package ide.square.template;
 
 import android.content.Context;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public abstract class BaseTemplate {
     private String name;
-    private List<BaseTemplateFile> files;
+    private List<TemplateFile> files;
     
     private Context context;
 
@@ -26,22 +27,22 @@ public abstract class BaseTemplate {
         return name;
     }
 
-    public List<BaseTemplateFile> getFiles() {
+    public List<TemplateFile> getFiles() {
         return files;
     }
 
-    public void addFile(BaseTemplateFile file) {
+    public void addFile(TemplateFile file) {
         files.add(file);
     }
 
-    public void removeFile(BaseTemplateFile file) {
+    public void removeFile(TemplateFile file) {
         files.remove(file);
     }
 
     public abstract void createTemplateFiles();
 
     public void saveTemplateFiles(String directoryPath) throws IOException {
-        for (BaseTemplateFile file : files) {
+        for (TemplateFile file : files) {
             Path filePath = Paths.get(directoryPath, file.getFileName());
             Path dir = filePath.getParent();
             if (!Files.exists(dir)) {

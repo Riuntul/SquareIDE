@@ -20,10 +20,11 @@ import com.google.android.material.textview.MaterialTextView;
 
 import ide.square.app.databinding.ActivityCreateProjectBinding;
 import ide.square.app.ui.listener.DrawableClickListener;
+import ide.square.app.util.FilesUtil;
 import ide.square.app.util.UriUtil;
 import ide.square.template.BaseTemplate;
 import ide.square.template.TemplateManager;
-import ide.square.template.module.AndroidTemplate;
+import ide.square.template.module.NoActivityTemplate;
 
 import java.io.File;
 import java.io.IOException;
@@ -153,18 +154,19 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
     
     private void createProject() {
+        FilesUtil.copyAssets("templates/base", projectPath, getApplicationContext());
         TemplateManager templateManager = new TemplateManager(projectPath);
-        AndroidTemplate android = new AndroidTemplate(projectName, packageName, getApplicationContext());
+        NoActivityTemplate android = new NoActivityTemplate(projectName, packageName, getApplicationContext());
         templateManager.loadTemplate(android);
         try {
-            templateManager.saveTemplate("AndroidProject");
-            templateManager.applyTemplate("AndroidProject");
+            templateManager.saveTemplate("No Activity");
+            templateManager.applyTemplate("No Activity");
         } catch(IOException e) {
             e.printStackTrace();
         }
-        BaseTemplate template = templateManager.getTemplate("AndroidProject");
+        BaseTemplate template = templateManager.getTemplate("No Activity");
         System.out.println(template);
-        templateManager.removeTemplate("AndroidProject");
+        templateManager.removeTemplate("No Activity");
     }
 
     @Override
