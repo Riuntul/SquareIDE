@@ -1,11 +1,19 @@
 package ide.square.app.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -15,6 +23,8 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import ide.square.app.R;
 import ide.square.app.databinding.ActivityMainBinding;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;
@@ -28,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         
         init_navbar();
+        
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
     }    
     
     protected void init_navbar() {

@@ -1,14 +1,16 @@
 package ide.square.template.module;
 
+import android.content.Context;
 import ide.square.template.BaseTemplate;
 import ide.square.template.TemplateFile;
+import java.io.IOException;
 
 public class AndroidTemplate extends BaseTemplate {
     private String projectName;
     private String packageName;
 
-    public AndroidTemplate(String projectName, String packageName) {
-        super("AndroidProject");
+    public AndroidTemplate(String projectName, String packageName, Context context) {
+        super("AndroidProject", context);
         
         this.projectName = projectName;
         this.packageName = packageName;
@@ -18,7 +20,7 @@ public class AndroidTemplate extends BaseTemplate {
 
     @Override
     public void createTemplateFiles() {
-        addFile(new TemplateFile("build.gradle.kts",
+        addFile(new TemplateFile("app/build.gradle.kts",
             "plugins {\n" +
             "    alias(libs.plugins.android.application)\n" +
             "}\n" +
@@ -70,7 +72,6 @@ public class AndroidTemplate extends BaseTemplate {
             "                includeGroupByRegex(\"androidx.*\")\n" +
             "            }\n" +
             "        }\n" +
-            "        \n" +
             "        mavenCentral()\n" +
             "        gradlePluginPortal()\n" +
             "    }\n" +
@@ -85,7 +86,7 @@ public class AndroidTemplate extends BaseTemplate {
             "    }\n" +
             "}\n" +
             "\n" +
-            "rootProject.name = \"Square IDE\"\n" +
+            "rootProject.name = \"" + projectName + "\"\n" +
             "include(\":app\")"
         ));
 
@@ -116,5 +117,20 @@ public class AndroidTemplate extends BaseTemplate {
             "    }\n" +
             "}"
         ));
+        
+        try {
+            addFileFromApkAssets("app/proguard-rules.pro", "template/base/app/proguard-rules.pro");
+            addFileFromApkAssets("gradle.properties", "template/base/gradle.properties");
+            addFileFromApkAssets("build.gradle.kts", "template/base/build.gradle.kts");
+            addFileFromApkAssets("gradlew", "template/base/gradlew");
+            addFileFromApkAssets("gradlew.bat", "template/base/gradlew.bat");
+            addFileFromApkAssets("gradle/libs.versions.toml", "template/base/gradle/libs.versions.toml");
+            addFileFromApkAssets("gradle/wrapper/gradle-wrapper.properties", "template/base/gradle/wrapper/gradle-wrapper.properties");
+            addFileFromApkAssets("gradle/wrapper/gradle-wrapper.jar", "template/base/gradle/wrapper/gradle-wrapper.jar");
+            addFileFromApkAssets(".gitignore", "template/base/gitignore");
+            addFileFromApkAssets("app/.gitignore", "template/base/app/gitignore");
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }

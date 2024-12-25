@@ -21,8 +21,12 @@ import com.google.android.material.textview.MaterialTextView;
 import ide.square.app.databinding.ActivityCreateProjectBinding;
 import ide.square.app.ui.listener.DrawableClickListener;
 import ide.square.app.util.UriUtil;
+import ide.square.template.BaseTemplate;
+import ide.square.template.TemplateManager;
+import ide.square.template.module.AndroidTemplate;
 
 import java.io.File;
+import java.io.IOException;
 
 public class CreateProjectActivity extends AppCompatActivity {
     private static String projectName;
@@ -109,6 +113,14 @@ public class CreateProjectActivity extends AppCompatActivity {
                 finish();
             }
         });
+        
+        MaterialButton createButton = binding.createButton;
+        createButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createProject();
+            }
+        });
     }
 
     private void selectDirectory() {
@@ -138,6 +150,21 @@ public class CreateProjectActivity extends AppCompatActivity {
             return documentFile.getUri().toString();
         }
         return null;
+    }
+    
+    private void createProject() {
+        TemplateManager templateManager = new TemplateManager(projectPath);
+        AndroidTemplate android = new AndroidTemplate(projectName, packageName, getApplicationContext());
+        templateManager.loadTemplate(android);
+        try {
+            templateManager.saveTemplate("AndroidProject");
+            templateManager.applyTemplate("AndroidProject");
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        BaseTemplate template = templateManager.getTemplate("AndroidProject");
+        System.out.println(template);
+        templateManager.removeTemplate("AndroidProject");
     }
 
     @Override

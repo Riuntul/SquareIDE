@@ -3,6 +3,9 @@ package ide.square.template;
 import android.content.Context;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +15,11 @@ public abstract class BaseTemplate {
     
     private Context context;
 
-    public BaseTemplate(String name) {
+    public BaseTemplate(String name, Context context) {
         this.name = name;
         this.files = new ArrayList<>();
+        
+        this.context = context;
     }
 
     public String getName() {
@@ -37,26 +42,17 @@ public abstract class BaseTemplate {
 
     public void saveTemplateFiles(String directoryPath) throws IOException {
         for (BaseTemplateFile file : files) {
-            File dir = new File(directoryPath);
-            if (!dir.exists()) {
-                dir.mkdirs();
+            Path filePath = Paths.get(directoryPath, file.getFileName());
+            Path dir = filePath.getParent();
+            if (!Files.exists(dir)) {
+                Files.createDirectories(dir);
             }
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File(dir, file.getFileName())))) {
-                writer.write(file.getContent());
-            }
+            Files.write(filePath, file.getContent().getBytes());
         }
     }
-
+    
     public void applyTemplateFiles(String targetDirectoryPath) throws IOException {
-        for (BaseTemplateFile file : files) {
-            File dir = new File(targetDirectoryPath);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File(dir, file.getFileName())))) {
-                writer.write(file.getContent());
-            }
-        }
+        saveTemplateFiles(targetDirectoryPath); 
     }
     
     public void addFileFromApkAssets(String file, String assetsFilePath) throws IOException { 
