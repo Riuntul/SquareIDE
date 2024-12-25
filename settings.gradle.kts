@@ -26,4 +26,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Square IDE"
-include(":core:app", ":core:tooling", ":java:lsp")
+include(":core:app", ":core:template", ":core:tooling", ":java:lsp")
