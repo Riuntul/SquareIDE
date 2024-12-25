@@ -9,7 +9,9 @@ google-material = { group = "com.google.android.material", name = "material", ve
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "nav" }
 androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "nav" }
 lsp4j = { group = "org.eclipse.lsp4j", name = "org.eclipse.lsp4j", version.ref = "lsp4j" }
-dom4j = { group = "org.dom4j", name = "dom4j", version = "2.1.4" }
+gradle-tooling = { group = "org.gradle", name = "gradle-tooling-api", version = "8.11.1" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version = "2.0.1" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }

@@ -19,8 +19,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { 
+            url = uri("https://repo.gradle.org/gradle/libs-releases") 
+        }
     }
 }
 
 rootProject.name = "Square IDE"
-include("app")
+include(":core:app", ":core:tooling", ":java:lsp")

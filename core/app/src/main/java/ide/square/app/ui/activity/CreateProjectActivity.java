@@ -127,7 +127,7 @@ public class CreateProjectActivity extends AppCompatActivity {
             EditText projectPathEdit = binding.projectPathEdit;
             projectPathEdit.setText(file.getAbsolutePath());
 
-            Log.d("ProjectBuilder", "Selected Project folder path: " + file.getAbsolutePath());
+            Log.i("ProjectBuilder", "Selected Project folder path: " + file.getAbsolutePath());
         }
     }
 
