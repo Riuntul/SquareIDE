@@ -31,7 +31,7 @@
         </activity>
         
         <activity
-            android:name=".ui.activity.CreateProjectActivity"
+            android:name=".ui.activity.SelectTemplateActivity"
             android:exported="true"
             android:label="@string/create_project"
             android:theme="@style/Theme.App">

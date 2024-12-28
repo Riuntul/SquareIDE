@@ -13,7 +13,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import ide.square.app.R;
 import ide.square.app.databinding.FragmentProjectBinding;
-import ide.square.app.ui.activity.CreateProjectActivity;
+import ide.square.app.ui.activity.SelectTemplateActivity;
 
 public class ProjectFragment extends Fragment {
     public FragmentProjectBinding binding;
@@ -31,11 +31,10 @@ public class ProjectFragment extends Fragment {
         messageTextView.setText(R.string.not_project);
         
         FloatingActionButton createProjectFab = binding.createProjectFab;
-        
         createProjectFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
+                Intent intent = new Intent(getActivity(), SelectTemplateActivity.class);
                 startActivity(intent);
             }
         });

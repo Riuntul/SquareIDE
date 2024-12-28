@@ -1,6 +1,5 @@
-package ide.square.app.ui.activity;
+package ide.square.app.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,17 +7,18 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.documentfile.provider.DocumentFile;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
-import ide.square.app.databinding.ActivityCreateProjectBinding;
+import ide.square.app.databinding.FragmentCreateProjectBinding;
 import ide.square.app.ui.listener.DrawableClickListener;
 import ide.square.app.util.FilesUtil;
 import ide.square.app.util.UriUtil;
@@ -29,29 +29,33 @@ import ide.square.template.module.NoActivityTemplate;
 import java.io.File;
 import java.io.IOException;
 
-public class CreateProjectActivity extends AppCompatActivity {
+public class CreateProjectFragment extends Fragment {
     private static String projectName;
     private static String packageName;
     private static String projectPath;
 
-    private int REQUEST_CODE_OPEN_DOCUMENT_TREE = 0;
-
-    public ActivityCreateProjectBinding binding;
+    public FragmentCreateProjectBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = ActivityCreateProjectBinding.inflate(getLayoutInflater());
-
-        setContentView(binding.getRoot());
-
-        MaterialTextView title = binding.titleText;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentCreateProjectBinding.inflate(getLayoutInflater(), container, false);
+        
+        return binding.getRoot();
+    }
+    
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        init();
+    }
+    
+    private void init() {
+        // Init TextView
+        MaterialTextView title = binding.title;
         title.setTextSize(25);
 
+        // Init EditText
         EditText projectNameEdit = binding.projectNameEdit;
         projectName = projectNameEdit.getText().toString();
-        
         projectNameEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence text, int start, int before, int count) {
@@ -67,7 +71,6 @@ public class CreateProjectActivity extends AppCompatActivity {
 
         EditText packageNameEdit = binding.packageNameEdit;
         packageName = packageNameEdit.getText().toString();
-        
         packageNameEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence text, int start, int before, int count) {
@@ -83,7 +86,6 @@ public class CreateProjectActivity extends AppCompatActivity {
 
         EditText projectPathEdit = binding.projectPathEdit;
         projectPath = projectPathEdit.getText().toString();
-
         DrawableClickListener.setOnDrawableClickListener(projectPathEdit, new DrawableClickListener.OnDrawableClickListener() {
             @Override
             public void onDrawableStartClick(View view) {
@@ -93,7 +95,6 @@ public class CreateProjectActivity extends AppCompatActivity {
             @Override
             public void onDrawableEndClick(View view) {}
         });
-
         projectPathEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence text, int start, int before, int count) {
@@ -107,11 +108,12 @@ public class CreateProjectActivity extends AppCompatActivity {
             public void afterTextChanged(Editable edit) {}
         });
 
+        // Init Button
         MaterialButton cancelButton = binding.cancelButton;
         cancelButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                getActivity().finish();
             }
         });
         
@@ -126,37 +128,28 @@ public class CreateProjectActivity extends AppCompatActivity {
 
     private void selectDirectory() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        this.startActivityForResult(intent, REQUEST_CODE_OPEN_DOCUMENT_TREE);
+        this.startActivityForResult(intent, 0);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case 0:
+                Uri treeUri = data.getData();
+                File file = new File(Environment.getExternalStorageDirectory(), UriUtil.removeTreePrimaryPrefix(treeUri.getPath()));
 
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            Uri treeUri = data.getData();
-            File file = new File(Environment.getExternalStorageDirectory(), UriUtil.removeTreePrimaryPrefix(treeUri.getPath()));
+                EditText projectPathEdit = binding.projectPathEdit;
+                projectPathEdit.setText(file.getAbsolutePath());
 
-            EditText projectPathEdit = binding.projectPathEdit;
-            projectPathEdit.setText(file.getAbsolutePath());
-
-            Log.i("ProjectBuilder", "Selected Project folder path: " + file.getAbsolutePath());
+                Log.i("ProjectBuilder", "Selected Project folder path: " + file.getAbsolutePath());
+                break;
         }
-    }
-
-    public String getDocumentPath(Context context, Uri treeUri) {
-        DocumentFile documentFile = DocumentFile.fromTreeUri(context, treeUri);
-
-        if (documentFile != null && documentFile.exists()) {
-            return documentFile.getUri().toString();
-        }
-        return null;
     }
     
     private void createProject() {
-        FilesUtil.copyAssets("templates/base", projectPath, getApplicationContext());
+        FilesUtil.copyAssets("templates/base", projectPath, getContext().getApplicationContext());
         TemplateManager templateManager = new TemplateManager(projectPath);
-        NoActivityTemplate android = new NoActivityTemplate(projectName, packageName, getApplicationContext());
+        NoActivityTemplate android = new NoActivityTemplate(projectName, packageName, getContext().getApplicationContext());
         templateManager.loadTemplate(android);
         try {
             templateManager.saveTemplate("No Activity");
@@ -170,8 +163,8 @@ public class CreateProjectActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
 
         binding = null;
     }

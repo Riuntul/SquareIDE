@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
     
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/title_text"
+        android:id="@+id/title"
         android:text="@string/create_project"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:id="@+id/project_name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/project_name_text"
+                android:text="My Application"
                 android:drawableStart="@drawable/ic_android"
                 android:drawablePadding="13dp"
                 android:hint="@string/project_name"
@@ -46,7 +46,7 @@
                 android:id="@+id/package_name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/package_name_text"
+                android:text="com.example.myapplication"
                 android:drawableStart="@drawable/ic_package_2"
                 android:drawablePadding="13dp"
                 android:hint="@string/package_name"
@@ -64,7 +64,7 @@
                 android:id="@+id/project_path_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/project_path_text"
+                android:text="/storage/emulated/0/SquareIDEProjects/My Application"
                 android:drawableStart="@drawable/ic_folder"
                 android:drawablePadding="13dp"
                 android:hint="@string/project_path"
