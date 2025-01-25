@@ -50,8 +50,4 @@ public class TemplateManager {
             throw new IllegalArgumentException("Template not found: " + name);
         }
     }
-
-    public void removeTemplate(String name) {
-        templateModules.remove(name);
-    }
 }

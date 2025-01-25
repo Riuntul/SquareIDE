@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.lsp4j)
+    implementation(project(":core:shared"))
+    implementation(project(":ui:material"))
     implementation(project(":core:template"))
     implementation(project(":java:lsp"))
     implementation(project(":core:tooling"))

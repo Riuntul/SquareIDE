@@ -4,11 +4,15 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -18,6 +22,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import ide.square.app.R;
 import ide.square.app.databinding.ActivityMainBinding;
+import ide.square.app.ui.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;
@@ -30,40 +35,45 @@ public class MainActivity extends AppCompatActivity {
         
         setContentView(binding.getRoot());
         
-        init_navbar();
+        initAppbar();
+        initFragment();
         
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
     }    
     
-    protected void init_navbar() {
-        Log.i("InitManager", "Started Navbar Init");
+    protected void initAppbar() {
+        setSupportActionBar(binding.appbar);
+    }
+    
+    protected void initFragment() {
+        Log.i("InitManager", "Started Fragment Init");
         
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.content);
-        NavController navController = navHostFragment.getNavController();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         
-        BottomNavigationView navbar = binding.navbar;
-        
-        NavigationUI.setupWithNavController(navbar, navController);
-        
-        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                if (item.getItemId() == R.id.project_nav) {
-                    navController.navigate(R.id.project_fragment);
-                        
-                    return true;    
-                } else if (item.getItemId() == R.id.settings_nav) {
-                	navController.navigate(R.id.settings_fragment);
-                        
-                    return true;    
-                }
-                return false;           
-            }
-        });
+        fragmentTransaction.replace(R.id.container, new MainFragment());
+        fragmentTransaction.commit();
         
         Log.i("InitManager", "Finish Navbar Init");
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_appbar, menu);
+        
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     
     @Override

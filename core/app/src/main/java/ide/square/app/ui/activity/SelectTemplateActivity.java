@@ -2,11 +2,11 @@ package ide.square.app.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
+import org.riuntul.material.activity.CollapsingToolbarActivity;
 import com.google.android.material.textview.MaterialTextView;
 import ide.square.app.databinding.ActivitySelectTemplateBinding;
 
-public class SelectTemplateActivity extends FragmentActivity {
+public class SelectTemplateActivity extends CollapsingToolbarActivity {
     public ActivitySelectTemplateBinding binding;
     
     @Override
@@ -16,9 +16,6 @@ public class SelectTemplateActivity extends FragmentActivity {
         binding = ActivitySelectTemplateBinding.inflate(getLayoutInflater());
         
         setContentView(binding.getRoot());
-        
-        MaterialTextView title = binding.title;
-        title.setTextSize(25);
     }
     
     @Override

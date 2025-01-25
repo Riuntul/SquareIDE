@@ -12,15 +12,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import ide.square.app.R;
-import ide.square.app.databinding.FragmentProjectBinding;
+import ide.square.app.databinding.FragmentMainBinding;
 import ide.square.app.ui.activity.SelectTemplateActivity;
 
-public class ProjectFragment extends Fragment {
-    public FragmentProjectBinding binding;
+public class MainFragment extends Fragment {
+    public FragmentMainBinding binding;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentProjectBinding.inflate(getLayoutInflater(), container, false);
+        binding = FragmentMainBinding.inflate(getLayoutInflater(), container, false);
         
         return binding.getRoot();
     }

@@ -16,12 +16,10 @@ public class NoActivityTemplate extends BaseTemplate {
         
         this.projectName = projectName;
         this.packageName = packageName;
-        
-        createTemplateFiles();
     }
 
     @Override
-    public void createTemplateFiles() {
+    public void onCreate() {
         addFile(new TemplateFile("app/build.gradle.kts",
             "plugins {\n" +
             "    alias(libs.plugins.android.application)\n" +

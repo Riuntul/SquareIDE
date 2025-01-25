@@ -1,29 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/title"
-        android:text="@string/create_project"
+        android:text="Test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:paddingStart="30dp"/>
-
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="100dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp">
-        
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/template_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        
-    </FrameLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:paddingTop="100dp"/>
+    
+</LinearLayout>

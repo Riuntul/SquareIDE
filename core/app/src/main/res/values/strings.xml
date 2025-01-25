@@ -1,12 +1,7 @@
 <resources>
-    <string name="app_name">Riuntul IDE</string>
-    <string name="project">Project</string>
-    <string name="settings">Settings</string>
     <string name="create_project">Create Project</string>
     <string name="not_project">Not Project</string>
     <string name="project_name">Project Name</string>
     <string name="package_name">Package Name</string>
     <string name="project_path">Save Location</string>
-    <string name="cancel">Cancel</string>
-    <string name="create">Create</string>
 </resources>

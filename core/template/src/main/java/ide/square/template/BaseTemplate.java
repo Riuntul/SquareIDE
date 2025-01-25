@@ -35,20 +35,16 @@ public abstract class BaseTemplate {
         files.add(file);
     }
 
-    public void removeFile(TemplateFile file) {
-        files.remove(file);
-    }
-
-    public abstract void createTemplateFiles();
+    public abstract void onCreate();
 
     public void saveTemplateFiles(String directoryPath) throws IOException {
         for (TemplateFile file : files) {
-            Path filePath = Paths.get(directoryPath, file.getFileName());
+            Path filePath = Paths.get(directoryPath, file.getFilesName());
             Path dir = filePath.getParent();
             if (!Files.exists(dir)) {
                 Files.createDirectories(dir);
             }
-            Files.write(filePath, file.getContent().getBytes());
+            Files.write(filePath, file.getFilesContent().getBytes());
         }
     }
     
@@ -65,6 +61,10 @@ public abstract class BaseTemplate {
         
         String content = new String(buffer, StandardCharsets.UTF_8);
         addFile(new TemplateFile(file, content)); 
+    }
+    
+    public Context getContext() {
+        return context;
     }
 
     @Override
