@@ -1,5 +1,6 @@
 package org.riuntul.material.activity;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ public class CollapsingToolbarActivity extends FragmentActivity {
     private int mCustomizeLayoutResId = 0;
 
     @Override
+    @SuppressLint("RestrictedApi")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
