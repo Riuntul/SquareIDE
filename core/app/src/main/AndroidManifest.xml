@@ -36,12 +36,5 @@
             android:label="@string/create_project"
             android:theme="@style/Theme.App">
         </activity>
-        
-        <activity
-            android:name=".ui.activity.TestActivity"
-            android:exported="true"
-            android:label="@string/create_project"
-            android:theme="@style/Theme.App">
-        </activity>
     </application>
 </manifest>
