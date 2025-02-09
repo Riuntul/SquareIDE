@@ -1,7 +1,7 @@
 <resources>
     <string name="create_project">Create Project</string>
-    <string name="not_project">Not Project</string>
     <string name="project_name">Project Name</string>
     <string name="package_name">Package Name</string>
     <string name="project_path">Save Location</string>
+    <string name="template_noactivity_title">No Activity</string>
 </resources>

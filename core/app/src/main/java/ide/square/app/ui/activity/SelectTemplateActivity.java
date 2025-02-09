@@ -1,10 +1,21 @@
 package ide.square.app.ui.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import org.riuntul.material.activity.CollapsingToolbarActivity;
-import com.google.android.material.textview.MaterialTextView;
+
+import android.transition.Slide;
+import android.view.Gravity;
+import android.view.Window;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import ide.square.app.databinding.ActivitySelectTemplateBinding;
+import ide.square.app.template.NoActivityTemplate;
+import ide.square.app.template.TemplateManager;
+
+import ide.square.app.template.TemplatesAdapter;
+import ide.square.app.template.TestTemplate;
+import org.riuntul.material.activity.CollapsingToolbarActivity;
 
 public class SelectTemplateActivity extends CollapsingToolbarActivity {
     public ActivitySelectTemplateBinding binding;
@@ -16,16 +27,16 @@ public class SelectTemplateActivity extends CollapsingToolbarActivity {
         binding = ActivitySelectTemplateBinding.inflate(getLayoutInflater());
         
         setContentView(binding.getRoot());
-    }
-    
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (resultCode) {
-            case 0:
-                super.onActivityResult(requestCode, resultCode, data);
-                
-                break;
-        }
+            
+        TemplateManager templateManager = new TemplateManager(); 
+        templateManager.register(new NoActivityTemplate(getApplicationContext()));
+        templateManager.register(new TestTemplate(getApplicationContext()));
+        
+        RecyclerView templateContainer = binding.templateContainer;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        templateContainer.setLayoutManager(linearLayoutManager);
+        templateContainer.setAdapter(new TemplatesAdapter(templateManager.getTemplates()));
     }
     
     @Override
