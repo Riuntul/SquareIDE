@@ -6,14 +6,14 @@ android {
     namespace = "ide.square.shared"
     compileSdk = 34
     
-    defaultConfig { 
+    defaultConfig {
         targetSdk = 34
         minSdk = 29
     }
     
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -25,6 +25,5 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.appcompat)
     implementation(libs.google.material)
 }
