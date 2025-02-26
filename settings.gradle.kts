@@ -26,4 +26,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Square IDE"
-include(":core:app", ":core:shared", ":ui:material")
+include(":core:app", ":core:shared", ":core:tooling", ":core:lsp", ":ui:material")

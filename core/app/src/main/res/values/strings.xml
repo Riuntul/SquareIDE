@@ -1,7 +1,10 @@
 <resources>
-    <string name="create_project">Create Project</string>
+    <string name="new_project">New Project</string>
     <string name="project_name">Project Name</string>
     <string name="package_name">Package Name</string>
     <string name="project_path">Save Location</string>
-    <string name="template_noactivity_title">No Activity</string>
+    <string name="template_noactivity_name">No Activity</string>
+    <string name="settings_themes_title">Themes</string>
+    <string name="settings_themes_subtitle">Schema, Dark Mode, Theme</string>
+    <string name="setup">Setup</string>
 </resources>

@@ -1,35 +1,31 @@
 package org.riuntul.material.activity;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.FragmentActivity;
-import org.riuntul.material.utils.BuildCompatUtils;
+
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.resources.TextAppearanceConfig;
+
 import org.riuntul.material.R;
 
-public class CollapsingToolbarActivity extends FragmentActivity {
+public class CollapsingToolbarActivity extends AppCompatActivity {
     private static final float TOOLBAR_LINE_SPACING_MULTIPLIER = 1.1f;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private AppBarLayout mAppBarLayout;
     
-    private int mCustomizeLayoutResId = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        if (mCustomizeLayoutResId > 0 && !BuildCompatUtils.isAtLeastS()) {
-            super.setContentView(mCustomizeLayoutResId);
-            return;
-        }
         
         TextAppearanceConfig.setShouldLoadFontSynchronously(true);
         
@@ -43,14 +39,12 @@ public class CollapsingToolbarActivity extends FragmentActivity {
         
         disableCollapsingToolbarLayoutScrollingBehavior();
 
-        final Toolbar toolbar = findViewById(R.id.action_bar);
-        setActionBar(toolbar);
+        final MaterialToolbar toolbar = findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
 
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(true);
         }
     }
 
@@ -83,10 +77,6 @@ public class CollapsingToolbarActivity extends FragmentActivity {
         }
     }
 
-    protected void setCustomizeContentView(int layoutResId) {
-        mCustomizeLayoutResId = layoutResId;
-    }
-
     @Override
     public void setTitle(CharSequence title) {
         if (mCollapsingToolbarLayout != null) {
@@ -112,6 +102,19 @@ public class CollapsingToolbarActivity extends FragmentActivity {
         }
         
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case (android.R.id.home) -> {
+                finish();
+                
+                return true;
+            } default -> {
+                return super.onOptionsItemSelected(item);
+            }
+        }
     }
 
     public CollapsingToolbarLayout getCollapsingToolbarLayout() {

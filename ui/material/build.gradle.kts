@@ -4,10 +4,9 @@ plugins {
 
 android {
     namespace = "org.riuntul.material"
-    compileSdk = 34
+    compileSdk = 35
     
-    defaultConfig { 
-        targetSdk = 34
+    defaultConfig {
         minSdk = 29
     }
     

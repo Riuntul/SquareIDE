@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
     
     <application
+        android:name=".IDEApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -30,7 +31,29 @@
         <activity
             android:name=".ui.activity.SelectTemplateActivity"
             android:exported="true"
-            android:label="@string/create_project">
+            android:label="@string/new_project">
+        </activity>
+        
+        <activity
+            android:name=".ui.activity.CreateProjectActivity"
+            android:label="@string/new_project">
+        </activity>
+        
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:exported="true"
+            android:label="@string/settings">
+        </activity>
+        
+        <activity
+            android:name=".ui.activity.JavaLanguageTestActivity"
+            android:exported="true"
+            android:label="@string/new_project">
+        </activity>
+        <activity
+            android:name=".ui.activity.SetupActivity"
+            android:exported="false"
+            android:label="@string/setup">
         </activity>
     </application>
 </manifest>

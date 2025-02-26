@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "ide.square.app"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ide.square.app"
         
-        targetSdk = 34
+        targetSdk = 35
         minSdk = 29
         
         versionCode = 1
@@ -35,8 +35,11 @@ android {
 
 dependencies {
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.preference)
     implementation(libs.google.material)
     implementation(libs.lsp4j)
+    implementation(libs.icu4j)
     implementation(project(":core:shared"))
+    implementation(project(":core:lsp"))
     implementation(project(":ui:material"))
 }

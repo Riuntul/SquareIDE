@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:icon="@drawable/ic_settings_wallpaper_white"
+        android:key="themes"
+        android:order="-70"
+        android:title="@string/settings_themes_title"
+        android:summary="@string/settings_themes_subtitle"/>
+
+</PreferenceScreen>

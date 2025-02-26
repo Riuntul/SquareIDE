@@ -4,10 +4,9 @@ plugins {
 
 android {
     namespace = "ide.square.shared"
-    compileSdk = 34
+    compileSdk = 35
     
     defaultConfig {
-        targetSdk = 34
         minSdk = 29
     }
     

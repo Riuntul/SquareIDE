@@ -7,18 +7,23 @@ import android.os.Bundle;
 import android.transition.Slide;
 import android.view.Gravity;
 import android.view.Window;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import ide.square.app.R;
 import ide.square.app.databinding.ActivitySelectTemplateBinding;
 import ide.square.app.template.NoActivityTemplate;
+import ide.square.app.template.Template;
 import ide.square.app.template.TemplateManager;
 
 import ide.square.app.template.TemplatesAdapter;
-import ide.square.app.template.TestTemplate;
+import javax.xml.transform.Templates;
 import org.riuntul.material.activity.CollapsingToolbarActivity;
 
 public class SelectTemplateActivity extends CollapsingToolbarActivity {
     public ActivitySelectTemplateBinding binding;
+    
+    private Intent intent;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +35,20 @@ public class SelectTemplateActivity extends CollapsingToolbarActivity {
             
         TemplateManager templateManager = new TemplateManager(); 
         templateManager.register(new NoActivityTemplate(getApplicationContext()));
-        templateManager.register(new TestTemplate(getApplicationContext()));
         
         RecyclerView templateContainer = binding.templateContainer;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        templateContainer.setLayoutManager(linearLayoutManager);
-        templateContainer.setAdapter(new TemplatesAdapter(templateManager.getTemplates()));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        templateContainer.setLayoutManager(gridLayoutManager);
+        templateContainer.setAdapter(new TemplatesAdapter(templateManager.getTemplates(), new TemplatesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Template template) {
+                intent = new Intent(SelectTemplateActivity.this, CreateProjectActivity.class);
+                intent.putExtra("templateClass", template.getClass().getName());
+                intent.putExtra("templateName", template.getName());           
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, R.anim.sud_stay);  
+            }
+        }));
     }
     
     @Override
@@ -44,5 +56,7 @@ public class SelectTemplateActivity extends CollapsingToolbarActivity {
         super.onDestroy();
         
         binding = null;
+        
+        intent = null;
     }
 }
