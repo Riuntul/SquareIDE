@@ -1,4 +1,4 @@
-package ide.square.app.util;
+package ide.square.app.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

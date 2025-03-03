@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
-import org.riuntul.material.R;
+import org.riuntul.material.databinding.FragmentCollapsingToolbarBinding;
 
 public abstract class CollapsingToolbarFragment extends Fragment {
     private static final float TOOLBAR_LINE_SPACING_MULTIPLIER = 1.1f;
@@ -23,30 +23,31 @@ public abstract class CollapsingToolbarFragment extends Fragment {
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
     private FrameLayout mContentFrameLayout;
+    
+    private FragmentCollapsingToolbarBinding mBinding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.layout_collapsing_toolbar, container, false);
+        mBinding = FragmentCollapsingToolbarBinding.inflate(inflater, container, false);
         
-        mCoordinatorLayout = view.findViewById(R.id.container);
-        mCollapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar);
-        mAppBarLayout = view.findViewById(R.id.app_bar);
+        mCoordinatorLayout = mBinding.container;
+        mCollapsingToolbarLayout = mBinding.collapsingToolbar;
+        mAppBarLayout = mBinding.appBar;
         
         if (mCollapsingToolbarLayout != null) {
             mCollapsingToolbarLayout.setLineSpacingMultiplier(TOOLBAR_LINE_SPACING_MULTIPLIER);
         }
         disableCollapsingToolbarLayoutScrollingBehavior();
         
-        mToolbar = view.findViewById(R.id.action_bar);
-        mContentFrameLayout = view.findViewById(R.id.layout_container);
+        mToolbar = mBinding.actionBar;
+        mContentFrameLayout = mBinding.layoutContainer;
         
-        return view;
+        return mBinding.getRoot();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         requireActivity().setActionBar(mToolbar);
     }
 
@@ -75,6 +76,7 @@ public abstract class CollapsingToolbarFragment extends Fragment {
         
         final AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
         behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                
             @Override
             public boolean canDrag(AppBarLayout appBarLayout) {
                 return false;
@@ -82,5 +84,11 @@ public abstract class CollapsingToolbarFragment extends Fragment {
         });
         
         params.setBehavior(behavior);
+    }
+    
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding = null;
     }
 }

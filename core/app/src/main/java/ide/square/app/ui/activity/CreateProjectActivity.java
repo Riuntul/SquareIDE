@@ -1,6 +1,7 @@
 package ide.square.app.ui.activity;
 
 import android.os.Bundle;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import ide.square.app.R;
 import ide.square.app.databinding.ActivityCreateProjectBinding;
@@ -21,6 +22,11 @@ public class CreateProjectActivity extends CollapsingToolbarActivity {
         binding = ActivityCreateProjectBinding.inflate(getLayoutInflater());
         
         setContentView(binding.getRoot());
+        
+        final ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true);
+        }
     }
     
     @Override

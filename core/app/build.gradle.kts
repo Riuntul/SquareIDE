@@ -39,7 +39,15 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.lsp4j)
     implementation(libs.icu4j)
+    implementation(libs.rikkax.material.preference)
     implementation(project(":core:shared"))
     implementation(project(":core:lsp"))
+    implementation(project(":core:tooling"))
     implementation(project(":ui:material"))
+}
+
+configurations {
+    all {
+        exclude(group = "androidx.appcompat", module = "appcompat")
+    }
 }

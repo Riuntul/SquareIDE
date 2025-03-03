@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
@@ -15,7 +14,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.resources.TextAppearanceConfig;
 
-import org.riuntul.material.R;
+import org.riuntul.material.databinding.ActivityCollapsingToolbarBinding;
 
 public class CollapsingToolbarActivity extends AppCompatActivity {
     private static final float TOOLBAR_LINE_SPACING_MULTIPLIER = 1.1f;
@@ -23,34 +22,33 @@ public class CollapsingToolbarActivity extends AppCompatActivity {
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private AppBarLayout mAppBarLayout;
     
+    private ActivityCollapsingToolbarBinding mBinding;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        mBinding = ActivityCollapsingToolbarBinding.inflate(getLayoutInflater());
+        
         TextAppearanceConfig.setShouldLoadFontSynchronously(true);
         
-        super.setContentView(R.layout.layout_collapsing_toolbar);
+        super.setContentView(mBinding.getRoot());
         
-        mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
-        mAppBarLayout = findViewById(R.id.app_bar);
+        mCollapsingToolbarLayout = mBinding.collapsingToolbar;
+        mAppBarLayout = mBinding.appBar;
         if (mCollapsingToolbarLayout != null) {
             mCollapsingToolbarLayout.setLineSpacingMultiplier(TOOLBAR_LINE_SPACING_MULTIPLIER);
         }
         
         disableCollapsingToolbarLayoutScrollingBehavior();
 
-        final MaterialToolbar toolbar = findViewById(R.id.action_bar);
+        final MaterialToolbar toolbar = mBinding.actionBar;
         setSupportActionBar(toolbar);
-
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override
     public void setContentView(int layoutResID) {
-        final ViewGroup parent = findViewById(R.id.layout_container);
+        final ViewGroup parent = mBinding.layoutContainer;
         
         if (parent != null) {
             parent.removeAllViews();
@@ -61,7 +59,7 @@ public class CollapsingToolbarActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(View view) {
-        final ViewGroup parent = findViewById(R.id.layout_container);
+        final ViewGroup parent = mBinding.layoutContainer;
         
         if (parent != null) {
             parent.addView(view);
@@ -70,7 +68,7 @@ public class CollapsingToolbarActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
-        final ViewGroup parent = findViewById(R.id.layout_container);
+        final ViewGroup parent = mBinding.layoutContainer;
         
         if (parent != null) {
             parent.addView(view, params);
@@ -109,7 +107,6 @@ public class CollapsingToolbarActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case (android.R.id.home) -> {
                 finish();
-                
                 return true;
             } default -> {
                 return super.onOptionsItemSelected(item);
@@ -134,6 +131,7 @@ public class CollapsingToolbarActivity extends AppCompatActivity {
         
         final AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
         behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                
             @Override
             public boolean canDrag(AppBarLayout appBarLayout) {
                 return false;
@@ -141,5 +139,11 @@ public class CollapsingToolbarActivity extends AppCompatActivity {
         });
         
         params.setBehavior(behavior);
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
     }
 }

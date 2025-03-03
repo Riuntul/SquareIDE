@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/auto-res">
+    
+    <androidx.preference.PreferenceCategory
+        android:title="@string/style">
+
+        <rikka.preference.SimpleMenuPreference
+            android:icon="@drawable/ic_dark_mode"
+            android:title="@string/dark_mode"
+            android:summary="%s"
+            android:key="dark_mode"
+            android:entries="@array/dark_mode_options"
+            android:entryValues="@array/dark_mode_values"
+            android:defaultValue="-1"/>
+        
+    </androidx.preference.PreferenceCategory>
+</androidx.preference.PreferenceScreen>

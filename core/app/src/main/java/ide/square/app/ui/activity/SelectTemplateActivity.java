@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.transition.Slide;
 import android.view.Gravity;
 import android.view.Window;
+import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,11 @@ public class SelectTemplateActivity extends CollapsingToolbarActivity {
         
         setContentView(binding.getRoot());
             
+        final ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true);
+        }
+        
         TemplateManager templateManager = new TemplateManager(); 
         templateManager.register(new NoActivityTemplate(getApplicationContext()));
         

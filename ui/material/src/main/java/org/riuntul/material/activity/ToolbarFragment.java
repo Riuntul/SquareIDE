@@ -12,31 +12,32 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.appbar.AppBarLayout;
 
-import org.riuntul.material.R;
+import org.riuntul.material.databinding.FragmentToolbarBinding;
 
 public abstract class ToolbarFragment extends Fragment {
     private CoordinatorLayout mCoordinatorLayout;
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
     private FrameLayout mContentFrameLayout;
+    
+    private FragmentToolbarBinding mBinding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.layout_toolbar, container, false);
+        mBinding = FragmentToolbarBinding.inflate(inflater, container, false);
         
-        mCoordinatorLayout = view.findViewById(R.id.container);
-        mAppBarLayout = view.findViewById(R.id.app_bar);
+        mCoordinatorLayout = mBinding.container;
+        mAppBarLayout = mBinding.appBar;
         
-        mToolbar = view.findViewById(R.id.action_bar);
-        mContentFrameLayout = view.findViewById(R.id.layout_container);
+        mToolbar = mBinding.actionBar;
+        mContentFrameLayout = mBinding.layoutContainer;
         
-        return view;
+        return mBinding.getRoot();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         requireActivity().setActionBar(mToolbar);
     }
 
@@ -50,5 +51,11 @@ public abstract class ToolbarFragment extends Fragment {
 
     public FrameLayout getContentFrameLayout() {
         return mContentFrameLayout;
+    }
+    
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding = null;
     }
 }

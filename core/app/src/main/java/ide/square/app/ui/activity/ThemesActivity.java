@@ -2,35 +2,25 @@ package ide.square.app.ui.activity;
 
 import android.animation.LayoutTransition;
 import android.os.Bundle;
-import android.view.MenuItem;
-
 import android.widget.FrameLayout;
-import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.resources.TextAppearanceConfig;
-import ide.square.app.IDESettings;
-import ide.square.app.databinding.ActivitySettingsBinding;
 import ide.square.app.R;
-import ide.square.app.ui.fragment.SettingsFragment;
+import ide.square.app.databinding.ActivityThemesBinding;
+import ide.square.app.ui.fragment.ThemesFragment;
 import org.riuntul.material.activity.CollapsingToolbarActivity;
 import org.riuntul.material.activity.ToolbarActivity;
 
-public class SettingsActivity extends CollapsingToolbarActivity {
-    public ActivitySettingsBinding mBinding;
+public class ThemesActivity extends CollapsingToolbarActivity {
+    public ActivityThemesBinding mBinding;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        mBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        mBinding = ActivityThemesBinding.inflate(getLayoutInflater());
         
         setContentView(mBinding.getRoot());
         
@@ -39,7 +29,7 @@ public class SettingsActivity extends CollapsingToolbarActivity {
             actionbar.setDisplayHomeAsUpEnabled(true);
         }
         
-        showFragment(new SettingsFragment(), R.id.main_content);
+        showFragment(new ThemesFragment(), R.id.main_content);
         
         FrameLayout content = mBinding.mainContent;
         content.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);

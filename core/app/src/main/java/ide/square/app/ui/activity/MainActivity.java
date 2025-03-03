@@ -2,6 +2,7 @@ package ide.square.app.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -13,9 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import androidx.preference.PreferenceManager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -23,8 +26,9 @@ import ide.square.app.IDEApplication;
 import ide.square.app.R;
 import ide.square.app.databinding.ActivityMainBinding;
 import java.io.File;
+import org.riuntul.material.activity.ToolbarActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ToolbarActivity {
     public ActivityMainBinding binding;
     
     private Intent intent;
@@ -46,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
         
         setContentView(binding.getRoot());
         
-        final MaterialToolbar toolbar = binding.actionBar;
-        setSupportActionBar(toolbar);
-
         init();
         
         // Check READ_EXTERNAL_STORAGE Permission
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_appbar, menu);
-        
         return true;
     }
     
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings:
                 intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
+            
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
