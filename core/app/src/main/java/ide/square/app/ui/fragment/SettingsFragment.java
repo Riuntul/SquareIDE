@@ -2,6 +2,9 @@ package ide.square.app.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import ide.square.app.R;
@@ -26,5 +29,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;        
             }
         });
+    }
+    
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.sud_slide_next_in, R.anim.sud_slide_next_out);
     }
 }

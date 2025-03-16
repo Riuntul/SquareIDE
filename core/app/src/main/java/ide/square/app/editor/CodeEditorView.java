@@ -16,13 +16,22 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import com.ibm.icu.text.Normalizer2;
 
-import ide.square.app.language.LSPClient;
+import ide.square.app.language.LanguageClientImpl;
+import ide.square.app.language.LanguageLauncher;
+import ide.square.lsp.JavaLanguageServer;
 
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.lsp4j.*;
+import org.eclipse.lsp4j.services.LanguageServer;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -31,12 +40,49 @@ public class CodeEditorView extends LinearLayout {
     private static final String TAG = "CodeEditorView";
 
     private EditText mEditText;
-    private LSPClient mLspClient;
     private ListView mSuggestionListView;
     
     private Handler mHandler;
     private boolean mIsRequestInProgress = false;
+    
+    private LanguageServer mLanguageServer;
 
+    private PopupWindow mCompletionPopup;
+    private int mOffsetX = 0;
+    private int mOffsetY = 10;
+
+    private void initCompletionPopup(Context context) {
+        mCompletionPopup = new PopupWindow(context);
+        mCompletionPopup.setContentView(mSuggestionListView);
+        mCompletionPopup.setOutsideTouchable(true);
+        mCompletionPopup.setFocusable(false);
+        mCompletionPopup.setBackgroundDrawable(null);
+    }
+
+    private void updatePopupPosition() {
+        if (mEditText.getLayout() == null) {
+            return;
+        }
+
+        int position = mEditText.getSelectionStart();
+        int line = mEditText.getLayout().getLineForOffset(position);
+        int offsetX = (int) mEditText.getLayout().getPrimaryHorizontal(position);
+        int offsetY = mEditText.getLayout().getLineBottom(line);
+
+        int[] location = new int[2];
+        mEditText.getLocationOnScreen(location);
+
+        int popupX = location[0] + offsetX + mOffsetX;
+        int popupY = location[1] + offsetY + mOffsetY;
+
+        if (!mCompletionPopup.isShowing()) {
+            mCompletionPopup.showAtLocation(mEditText, Gravity.NO_GRAVITY, popupX, popupY);
+        } else {
+            mCompletionPopup.update(popupX, popupY, -1, -1);
+        }
+    }
+
+    
     public CodeEditorView(Context context) {
         super(context);
         init(context);
@@ -54,11 +100,10 @@ public class CodeEditorView extends LinearLayout {
 
     private void init(Context context) {
         setOrientation(VERTICAL);
+        
+        initCompletionPopup(context);
 
         mHandler = new Handler(Looper.getMainLooper());
-
-        mLspClient = new LSPClient();
-        mLspClient.initialize();
 
         mEditText = new EditText(context);
         mEditText.setBackgroundColor(Color.TRANSPARENT);
@@ -68,40 +113,7 @@ public class CodeEditorView extends LinearLayout {
         mEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         mEditText.setMaxLines(Integer.MAX_VALUE);
         mEditText.setSingleLine(false);
-        mEditText.addTextChangedListener(new TextWatcher() {
-                
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Log.d(TAG, "beforeTextChanged: " + s);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d(TAG, "onTextChanged: " + s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    mHandler.removeCallbacksAndMessages(null);
-                        
-                    mHandler.postDelayed(() -> {
-                        if (!mIsRequestInProgress) {
-                            mIsRequestInProgress = true;
-                            requestCompletion(s.toString(), mEditText.getSelectionStart());
-                        }
-                    }, 300);
-                } else {
-                    hideSuggestionList();
-                }
-            }
-        });
-
-        mEditText.setOnFocusChangeListener((view, hasFocus) -> {
-            if (hasFocus && mEditText.getText().length() > 0) {
-                requestCompletion(mEditText.getText().toString(), mEditText.getSelectionStart());
-            }
-        });
+        mEditText.setHorizontallyScrolling(true);
 
         addView(mEditText, new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
 
@@ -122,7 +134,7 @@ public class CodeEditorView extends LinearLayout {
             Position pos = new Position(lineNumber, column);
             CompletionParams params = new CompletionParams(documentIdentifier, pos);
 
-            CompletableFuture.runAsync(() -> mLspClient.getCompletion(params).thenAccept(completionEither -> {
+            CompletableFuture.runAsync(() -> mLanguageServer.getTextDocumentService().completion(params).thenAccept(completionEither -> {
                 if (completionEither.isLeft()) {
                     List<CompletionItem> completionItems = completionEither.getLeft();
                             
@@ -202,5 +214,76 @@ public class CodeEditorView extends LinearLayout {
         }
         
         return true;
+    }
+    
+    public void openFile(File file) {
+        if (file != null) {
+            if (file.exists()) {
+                if (file.isFile()) {
+                    if (FilenameUtils.getExtension(file.getName()).equals("java")) {
+                        mLanguageServer = new JavaLanguageServer();
+                    }
+                    readFile(file);
+                    
+                    LanguageLauncher launcher = new LanguageLauncher(mLanguageServer, new LanguageClientImpl());
+                    launcher.start();
+                    
+                    mEditText.addTextChangedListener(new TextWatcher() {
+                
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            if (s.length() > 0) {
+                                mHandler.removeCallbacksAndMessages(null);
+                        
+                                mHandler.postDelayed(() -> {
+                                    if (!mIsRequestInProgress) {
+                                        mIsRequestInProgress = true;
+                                                
+                                        String inputText = s.toString(); 
+                                        int cursorPosition = mEditText.getSelectionStart();               
+                                                
+                                        requestCompletion(s.toString(), mEditText.getSelectionStart());
+                                                
+                                        updatePopupPosition();        
+                                    }
+                                }, 300);
+                            } else {
+                                hideSuggestionList();
+                            }
+                        }
+                    });
+
+                    mEditText.setOnFocusChangeListener((view, hasFocus) -> {
+                        if (hasFocus && mEditText.getText().length() > 0) {
+                            requestCompletion(mEditText.getText().toString(), mEditText.getSelectionStart());
+                        }
+                    });
+                }
+            }
+        }
+    }
+        
+    private void readFile(File file) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            StringBuilder content = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+
+            reader.close();
+                        
+            mEditText.setText(content.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

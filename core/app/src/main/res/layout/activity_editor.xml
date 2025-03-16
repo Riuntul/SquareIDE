@@ -2,53 +2,54 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
     android:fitsSystemWindows="true">
-    
+
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:outlineSpotShadowColor="@android:color/transparent"
         android:fitsSystemWindows="true"
         android:outlineAmbientShadowColor="@android:color/transparent"
-        android:outlineSpotShadowColor="@android:color/transparent">
+        android:id="@+id/app_bar">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/action_bar"
-            android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            app:layout_collapseMode="pin"
             android:theme="?android:attr/actionBarTheme"
-            app:layout_collapseMode="pin"/>
+            android:id="@+id/action_bar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
-    
+
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/container"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
         app:cardBackgroundColor="?attr/colorSurface"
         app:cardCornerRadius="5dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp">
-        
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:id="@+id/container">
 
-            
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
             <ide.square.app.editor.CodeEditorView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            
-            <ide.square.app.ui.widget.sheet.EditorBottomSheet
-                android:id="@+id/bottom_sheet"
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:behavior_hideable="false"
+                android:layout_width="match_parent"
+                android:id="@+id/code_view" />
+
+            <ide.square.app.ui.widget.sheet.EditorBottomSheet
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                 app:behavior_peekHeight="56dp"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
+                android:id="@+id/bottom_sheet"
+                app:behavior_hideable="false" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </com.google.android.material.card.MaterialCardView>

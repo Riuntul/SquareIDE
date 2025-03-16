@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.lsp4j)
     implementation(libs.icu4j)
     implementation(libs.rikkax.material.preference)
+    implementation(libs.commons.io)
     implementation(project(":core:shared"))
     implementation(project(":core:lsp"))
     implementation(project(":core:tooling"))

@@ -18,6 +18,7 @@ import ide.square.app.R;
 import ide.square.app.databinding.LayoutEditorBottomSheetBinding;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 public class EditorBottomSheet extends RelativeLayout {
     public LayoutEditorBottomSheetBinding mBinding;
@@ -32,6 +33,10 @@ public class EditorBottomSheet extends RelativeLayout {
     final int CHILD_HEADER = 0;
     final int CHILD_SYMBOL_INPUT = 1;
     final int CHILD_ACTION = 2;
+    
+    private MaterialTextView logTextView;
+    
+    private String log;
     
     public EditorBottomSheet(Context context) {
         super(context);
@@ -73,20 +78,23 @@ public class EditorBottomSheet extends RelativeLayout {
             }
         });
         
-        MaterialTextView logTextView = mBinding.logcatOutput;
-        try {
-            Process process = Runtime.getRuntime().exec("logcat -d");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            StringBuilder log = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line).append("\n");
+        logTextView = mBinding.logcatOutput;
+        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logTextView.append(log + "\n");
+                final int scrollAmount = logTextView.getLayout().getLineTop(logTextView.getLineCount()) - logTextView.getHeight();
+                if (scrollAmount > 0)
+                    logTextView.scrollTo(0, scrollAmount);
+                else
+                    logTextView.scrollTo(0, 0);
             }
-            logTextView.setText(log.toString());
-        } catch (Exception e) {
-            logTextView.setText("Error fetching logcat logs: " + e.getMessage());
-        }
+        });
+    }
+    
+    public void setOutputStream(OutputStream outputStream) {
+        log = outputStream.toString();
     }
     
     private void init(Context context) {

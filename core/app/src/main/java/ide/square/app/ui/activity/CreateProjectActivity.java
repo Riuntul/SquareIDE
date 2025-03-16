@@ -1,17 +1,20 @@
 package ide.square.app.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import ide.square.app.R;
 import ide.square.app.databinding.ActivityCreateProjectBinding;
 import ide.square.app.template.Template;
 import org.riuntul.material.activity.CollapsingToolbarActivity;
+import org.riuntul.material.activity.ToolbarActivity;
 
 public class CreateProjectActivity extends CollapsingToolbarActivity {
-    public ActivityCreateProjectBinding binding;
+    public ActivityCreateProjectBinding mBinding;
     
-    private Class<Template> templateClass;
+    private Template mTemplate;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,27 +22,31 @@ public class CreateProjectActivity extends CollapsingToolbarActivity {
         
         setTitle(getIntent().getIntExtra("templateName", 0));
         
-        binding = ActivityCreateProjectBinding.inflate(getLayoutInflater());
+        mBinding = ActivityCreateProjectBinding.inflate(getLayoutInflater());
         
-        setContentView(binding.getRoot());
+        setContentView(mBinding.getRoot());
         
         final ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
+        }
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mTemplate = getIntent().getParcelableExtra("templateClass", Template.class);
+        } else {
+            mTemplate = getIntent().getParcelableExtra("templateClass");
         }
     }
     
     @Override
     public void finish() {
         super.finish();
-        
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
     
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        
-        binding = null;
+        mBinding = null;
     }
 }

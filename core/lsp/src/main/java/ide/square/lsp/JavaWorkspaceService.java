@@ -18,8 +18,7 @@ public class JavaWorkspaceService implements WorkspaceService {
 
     @Override
     public void didChangeConfiguration(DidChangeConfigurationParams params) {
-        GradleToolingServer tooling = new GradleToolingServer("");
-        tooling.configureProject();
+        
     }
 
     @Override

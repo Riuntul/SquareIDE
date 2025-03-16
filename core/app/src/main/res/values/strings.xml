@@ -12,4 +12,8 @@
     <string name="follow_system">Follow System</string>
     <string name="always_on">Always on</string>
     <string name="always_off">Always off</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="setup_title">Setup</string>
+    <string name="setup_text">Initialization is required to use the SquareIDE</string>
 </resources>

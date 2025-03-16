@@ -2,26 +2,18 @@ package ide.square.app.ui.activity;
 
 import android.animation.LayoutTransition;
 import android.os.Bundle;
-import android.view.MenuItem;
-
 import android.widget.FrameLayout;
-import android.widget.Toast;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.resources.TextAppearanceConfig;
-import ide.square.app.IDESettings;
-import ide.square.app.databinding.ActivitySettingsBinding;
+
 import ide.square.app.R;
+import ide.square.app.databinding.ActivitySettingsBinding;
 import ide.square.app.ui.fragment.SettingsFragment;
+
 import org.riuntul.material.activity.CollapsingToolbarActivity;
-import org.riuntul.material.activity.ToolbarActivity;
 
 public class SettingsActivity extends CollapsingToolbarActivity {
     public ActivitySettingsBinding mBinding;
@@ -37,6 +29,7 @@ public class SettingsActivity extends CollapsingToolbarActivity {
         final ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_close);
         }
         
         showFragment(new SettingsFragment(), R.id.main_content);

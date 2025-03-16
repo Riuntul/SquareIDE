@@ -11,17 +11,15 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.concurrent.Future;
 
-public class JavaLanguageLauncher {
-    private static final String TAG = "JavaLanguageLauncher";
+public class LanguageLauncher {
+    private static final String TAG = "LanguageLauncher";
     
     private final LanguageServer mServer;
     private final LanguageClient mClient;
 
-    public JavaLanguageLauncher(LanguageServer server, LanguageClient client) {
+    public LanguageLauncher(LanguageServer server, LanguageClient client) {
         this.mServer = server;
         this.mClient = client;
-        
-        Log.d(TAG, "Initialized");
     }
 
     public void start() {
@@ -33,15 +31,15 @@ public class JavaLanguageLauncher {
             PipedInputStream serverIn = new PipedInputStream();
             PipedOutputStream serverOut = new PipedOutputStream(serverIn);
 
-            Log.d(TAG, "Creating serverLauncher...");
+            Log.d(TAG, "Creating Server Launcher...");
             Launcher<LanguageClient> serverLauncher = LSPLauncher.createServerLauncher(mServer, serverIn, serverOut);
-            Log.d(TAG, "ServerLauncher created");
+            Log.d(TAG, "Server Launcher Created");
 
-            Log.d(TAG, "Creating ClientLauncher...");
+            Log.d(TAG, "Creating Client Launcher...");
             Launcher<LanguageServer> clientLauncher = LSPLauncher.createClientLauncher(mClient, clientIn, clientOut);
-            Log.d(TAG, "ClientLauncher created");
+            Log.d(TAG, "Client Launcher Created");
 
-            Log.d(TAG, "Starting serverFuture and clientFuture...");
+            Log.d(TAG, "Starting Server Future and Client Future...");
             Future<Void> serverFuture = serverLauncher.startListening();
             Future<Void> clientFuture = clientLauncher.startListening();
             
