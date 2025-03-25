@@ -32,6 +32,7 @@ public class SelectTemplateActivity extends CollapsingToolbarActivity {
         final ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_close);
         }
         
         TemplateManager templateManager = new TemplateManager(); 
@@ -55,7 +56,7 @@ public class SelectTemplateActivity extends CollapsingToolbarActivity {
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        overridePendingTransition(org.riuntul.material.R.anim.sud_slide_next_in, org.riuntul.material.R.anim.sud_slide_next_out);
     }
     
     @Override

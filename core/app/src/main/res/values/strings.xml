@@ -16,4 +16,8 @@
     <string name="next">Next</string>
     <string name="setup_title">Setup</string>
     <string name="setup_text">Initialization is required to use the SquareIDE</string>
+    <string name="developer_settings_title">Developer</string>
+    <string name="developer_settings_summary">Debug, Log</string>
+    <string name="style_settings_title">Style</string>
+    <string name="style_settings_summary">Dark Mode, Color Scheme</string>
 </resources>

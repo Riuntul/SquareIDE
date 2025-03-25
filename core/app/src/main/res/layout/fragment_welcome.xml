@@ -8,18 +8,12 @@
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content">
-    
-        <com.google.android.material.textview.MaterialTextView
-            android:text="@string/setup_title"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"/>
-    
-        <com.google.android.material.textview.MaterialTextView
-            android:text="@string/setup_text"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-
+        
+        <com.google.android.material.imageview.ShapeableImageView
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:strokeWidth="5dp"/>
+        
     </LinearLayout>
 </LinearLayout>

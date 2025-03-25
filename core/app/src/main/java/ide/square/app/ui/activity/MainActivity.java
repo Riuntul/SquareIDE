@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import ide.square.app.IDEApplication;
 import ide.square.app.R;
 import ide.square.app.databinding.ActivityMainBinding;
+import ide.square.app.settings.homepage.SettingsHomepageActivity;
 
 import org.riuntul.material.activity.ToolbarActivity;
 
@@ -35,13 +36,6 @@ public class MainActivity extends ToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        if (!mConfigDir.exists()) {
-            setup();
-        } else if (!mConfigDir.isDirectory()) {
-            mConfigDir.delete();
-            setup();
-        }
         
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         
@@ -90,7 +84,7 @@ public class MainActivity extends ToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                mIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                mIntent = new Intent(MainActivity.this, SettingsHomepageActivity.class);
                 startActivity(mIntent);
             
                 return true;

@@ -12,7 +12,6 @@ icu4j = { group = "com.ibm.icu", name = "icu4j", version = "69.1" }
 rikkax-material-preference = { group = "dev.rikka.rikkax.material", name = "material-preference", version = "2.0.0" }
 commons-io = { group = "commons-io", name = "commons-io", version = "2.13.0" }
 
-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }

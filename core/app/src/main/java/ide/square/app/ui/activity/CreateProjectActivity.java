@@ -41,7 +41,7 @@ public class CreateProjectActivity extends CollapsingToolbarActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        overridePendingTransition(org.riuntul.material.R.anim.sud_slide_back_in, org.riuntul.material.R.anim.sud_slide_back_out);
     }
     
     @Override

@@ -1,8 +1,6 @@
-package ide.square.app.ui.activity;
+package ide.square.app.settings.homepage;
 
-import android.animation.LayoutTransition;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
@@ -10,19 +8,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import ide.square.app.R;
-import ide.square.app.databinding.ActivitySettingsBinding;
-import ide.square.app.ui.fragment.SettingsFragment;
+import ide.square.app.databinding.ActivitySettingsHomepageBinding;
 
 import org.riuntul.material.activity.CollapsingToolbarActivity;
 
-public class SettingsActivity extends CollapsingToolbarActivity {
-    public ActivitySettingsBinding mBinding;
+public class SettingsHomepageActivity extends CollapsingToolbarActivity {
+    public ActivitySettingsHomepageBinding mBinding;
+    
+    private interface FragmentCreator<T extends Fragment> {
+        T create();
+
+        default void init(Fragment fragment) {}
+    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        mBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        mBinding = ActivitySettingsHomepageBinding.inflate(getLayoutInflater());
         
         setContentView(mBinding.getRoot());
         
@@ -32,23 +35,27 @@ public class SettingsActivity extends CollapsingToolbarActivity {
             actionbar.setHomeAsUpIndicator(R.drawable.ic_close);
         }
         
-        showFragment(new SettingsFragment(), R.id.main_content);
-        
-        FrameLayout content = mBinding.mainContent;
-        content.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+        showFragment(() -> new SettingsHomepageFragment(), R.id.main_content);
     }
     
-    private void showFragment(Fragment fragment, int id) {
+    private <T extends Fragment> T showFragment(FragmentCreator<T> fragmentCreator, int id) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        final Fragment showFragment = fragmentManager.findFragmentById(id);
+        
+        T showFragment = (T) fragmentManager.findFragmentById(id);
 
         if (showFragment == null) {
-            fragmentTransaction.add(id, fragment);
+            showFragment = fragmentCreator.create();
+            fragmentCreator.init(showFragment);
+            fragmentTransaction.add(id, showFragment);
         } else {
+            fragmentCreator.init(showFragment);
             fragmentTransaction.show(showFragment);
         }
+        
         fragmentTransaction.commit();
+        
+        return showFragment;
     }
     
     @Override

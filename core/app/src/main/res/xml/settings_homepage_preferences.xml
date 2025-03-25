@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <ide.square.app.settings.widget.HomepagePreference
+        android:icon="@drawable/ic_settings_wallpaper_filled"
+        android:fragment="ide.square.app.settings.SettingsStyleFragment"
+        android:title="@string/style_settings_title"
+        android:summary="@string/style_settings_summary"/>
+    
+    <ide.square.app.settings.widget.HomepagePreference
+        android:icon="@drawable/ic_settings_development"
+        android:fragment="ide.square.app.settings.SettingsDeveloperFragment"
+        android:title="@string/developer_settings_title"
+        android:summary="@string/developer_settings_summary"/>
+    
+</androidx.preference.PreferenceScreen>
