@@ -7,4 +7,4 @@ This project is a Material Design 3 styled IDE for Android platform.
 
 # Features
 
-- [] Gradle Build Services
+- [ ] Gradle Build Services
