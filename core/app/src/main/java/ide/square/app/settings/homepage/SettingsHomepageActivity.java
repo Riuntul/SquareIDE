@@ -2,11 +2,13 @@ package ide.square.app.settings.homepage;
 
 import android.os.Bundle;
 
+import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import ide.square.app.IDESettings;
 import ide.square.app.R;
 import ide.square.app.databinding.ActivitySettingsHomepageBinding;
 
@@ -34,6 +36,8 @@ public class SettingsHomepageActivity extends CollapsingToolbarActivity {
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setHomeAsUpIndicator(R.drawable.ic_close);
         }
+        
+        Toast.makeText(this, IDESettings.getDarkMode(), Toast.LENGTH_SHORT).show();
         
         showFragment(() -> new SettingsHomepageFragment(), R.id.main_content);
     }

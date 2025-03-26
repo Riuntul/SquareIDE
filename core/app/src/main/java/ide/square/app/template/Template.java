@@ -5,69 +5,39 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public abstract class Template implements Parcelable {
-    private int name;
-    private Drawable image;
+    private String mTitle;
+    private int mTitleIntRes;
+    private Drawable mImage;
     
-    private String projectName;
-    private String packageName;
-    private String projectPath;
-
-    private TemplateManager templateManager;
-    
-    public Template(String projectName, String packageName, String projectPath) {
-        this.projectName = projectName;
-        this.packageName = packageName;
-        this.projectPath = projectPath;
-        
-        this.templateManager = new TemplateManager();
-    }
-    
-    public Template(int name, Drawable image) {
-        this.name = name;
-        this.image = image;
+    public Template(String title, int titleIntRes, Drawable image) {
+        mTitle = title;
+        mTitleIntRes = titleIntRes;
+        mImage = image;
     }
 
     protected Template(Parcel in) {
-        name = in.readInt();
-        
-        projectName = in.readString();
-        packageName = in.readString();
-        projectPath = in.readString();
+        mTitle = in.readString();
+        mTitleIntRes = in.readInt();
     }
 
-    public abstract void onCreate();
+    public abstract void onCreate(TemplateManager templateManager);
 
-    public int getName() {
-        return name;
+    public String getTitle() {
+        return mTitle;
+    }
+    
+    public int getTitleIntRes() {
+        return mTitleIntRes;
     }
 
     public Drawable getImage() {
-        return image;
-    }
-
-    public TemplateManager getTemplateManager() {
-        return templateManager;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public String getProjectPath() {
-        return projectPath;
+        return mImage;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(name);
-        
-        dest.writeString(projectName);
-        dest.writeString(packageName);
-        dest.writeString(projectPath);
+        dest.writeString(mTitle);
+        dest.writeInt(mTitleIntRes);
     }
 
     @Override
@@ -76,6 +46,7 @@ public abstract class Template implements Parcelable {
     }
 
     public static final Creator<Template> CREATOR = new Creator<Template>() {
+        
         @Override
         public Template createFromParcel(Parcel in) {
             throw new UnsupportedOperationException("Cannot create instances of abstract class Template");

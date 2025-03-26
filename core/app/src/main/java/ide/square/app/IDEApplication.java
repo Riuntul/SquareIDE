@@ -23,7 +23,6 @@ public class IDEApplication extends Application {
     private void init(Context context) {
         IDESettings.initialize(context);
         
-        //DynamicColors.applyToActivitiesIfAvailable(this);
         AppCompatDelegate.setDefaultNightMode(Integer.parseInt(IDESettings.getDarkMode()));
     }
 }

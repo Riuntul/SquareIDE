@@ -47,7 +47,11 @@ public class SelectTemplateActivity extends CollapsingToolbarActivity {
             public void onItemClick(Template template) {
                 mIntent = new Intent(SelectTemplateActivity.this, CreateProjectActivity.class);
                 mIntent.putExtra("templateClass", template);
-                mIntent.putExtra("templateName", template.getName());           
+                if (template.getTitleIntRes() != 0) {
+                    mIntent.putExtra("templateName", template.getTitleIntRes());       
+                } else {           
+                    mIntent.putExtra("templateName", template.getTitle());
+                }              
                 startActivity(mIntent);
             }
         }));

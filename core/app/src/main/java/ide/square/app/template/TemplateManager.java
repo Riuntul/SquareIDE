@@ -1,5 +1,6 @@
 package ide.square.app.template;
 
+import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,12 +16,15 @@ public class TemplateManager {
     }
     
     public void outputProject(Template template, String path) {
-        template.onCreate();
-        
         for (TemplateFile file : files) {
-        	File outFile = new File(path, new File(file.getPath()).getName());
+        	File outFile = new File(path + "/" + file.getPath());
             try {
+                if (!outFile.getParentFile().exists()) {
+                    outFile.getParentFile().mkdirs();
+                }
+                    
                 FileWriter writer = new FileWriter(outFile);
+                
                 writer.write(file.getContent());
                 writer.close();
             } catch (IOException e) {

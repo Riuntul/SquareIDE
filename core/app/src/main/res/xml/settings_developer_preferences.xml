@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
-    <androidx.preference.SwitchPreferenceCompat
-        android:key="development_switch"
-        android:title="Test"/>
-
+    <org.riuntul.material.preference.MaterialSwitchPreference
+        android:key="logcat_ide_output"
+        android:title="Output IDE Log"
+        android:summary="Output IDE Logcat Log to /sdcard"
+        android:defaultValue="false"/>
+    
 </androidx.preference.PreferenceScreen>

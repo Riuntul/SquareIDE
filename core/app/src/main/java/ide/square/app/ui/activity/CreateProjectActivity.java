@@ -5,9 +5,15 @@ import android.os.Bundle;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.button.MaterialButton;
 import ide.square.app.R;
 import ide.square.app.databinding.ActivityCreateProjectBinding;
+import ide.square.app.template.NoActivityTemplate;
 import ide.square.app.template.Template;
+import ide.square.app.template.TemplateBuilder;
+import ide.square.app.template.TemplateManager;
+import java.io.File;
+import java.io.IOException;
 import org.riuntul.material.activity.CollapsingToolbarActivity;
 import org.riuntul.material.activity.ToolbarActivity;
 
@@ -36,6 +42,14 @@ public class CreateProjectActivity extends CollapsingToolbarActivity {
         } else {
             mTemplate = getIntent().getParcelableExtra("templateClass");
         }
+        
+        MaterialButton nextButton = mBinding.next;
+        nextButton.setOnClickListener((view) -> {
+            TemplateManager templateManager = new TemplateManager();
+            Template template = getIntent().getParcelableExtra("templateClass");
+            template.onCreate(templateManager);    
+            templateManager.outputProject(template, "/sdcard/AndroidIDEProjects/Test");
+        });
     }
     
     @Override

@@ -42,7 +42,11 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.Temp
         Template template = templateList.get(position);
         
         holder.image.setImageDrawable(template.getImage());
-        holder.title.setText(template.getName());
+        if (template.getTitleIntRes() != 0) {
+            holder.title.setText(template.getTitleIntRes());
+        } else {
+            holder.title.setText(template.getTitle());
+        }    
             
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,16 +3,13 @@ package ide.square.app.template;
 import android.content.Context;
 
 import android.os.Parcel;
+import android.util.Log;
 import ide.square.app.R;
 import ide.square.app.utils.ResourceUtils;
 
 public class NoActivityTemplate extends Template {
-    public NoActivityTemplate(String projectName, String packageName, String projectPath) {
-        super(projectName, packageName, projectPath);
-    }
-    
     public NoActivityTemplate(Context context) {
-        super(R.string.template_noactivity_name, new ResourceUtils(context).getAssetsDrawable("framework/templates/res/image/no_activity.png"));
+        super("No Activity", R.string.template_noactivity_name, new ResourceUtils(context).getAssetsDrawable("framework/templates/res/image/no_activity.png"));
     }
     
     protected NoActivityTemplate(Parcel in) {
@@ -20,8 +17,8 @@ public class NoActivityTemplate extends Template {
     }
 
     @Override
-    public void onCreate() {
-        getTemplateManager().addFile(new TemplateFile("src/test.txt", "Test"));
+    public void onCreate(TemplateManager templateManager) {
+        templateManager.addFile(new TemplateFile("src/test.txt", "Test"));
     }
     
     public static final Creator<NoActivityTemplate> CREATOR = new Creator<NoActivityTemplate>() {
